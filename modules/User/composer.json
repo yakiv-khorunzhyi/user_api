@@ -1,0 +1,23 @@
+{
+    "name": "yakiv.khorunzhyi/user",
+    "description": "",
+    "authors": [
+        {
+            "name": "Yakiv Khorunzhyi",
+            "email": "yakiv.khorunzhyi@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\User\\": ""
+        }
+    }
+}
