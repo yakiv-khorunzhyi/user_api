@@ -2,8 +2,12 @@
 
 namespace Modules\User\Providers;
 
+use App\Models\User;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\User\Http\Controllers\ResourceController;
+use Modules\User\Repository;
+use Modules\User\Service;
 
 class UserServiceProvider extends ServiceProvider
 {
@@ -27,7 +31,7 @@ class UserServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
-        $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/migrations'));
+        $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
     }
 
     /**
@@ -38,6 +42,7 @@ class UserServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+        $this->bindServices();
     }
 
     /**
@@ -110,5 +115,12 @@ class UserServiceProvider extends ServiceProvider
             }
         }
         return $paths;
+    }
+
+    public function bindServices(): void
+    {
+        $this->app->bind(ResourceController::class, function () {
+            return new ResourceController(new Service(new Repository(User::class)));
+        });
     }
 }

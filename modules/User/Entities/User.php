@@ -2,29 +2,15 @@
 
 namespace Modules\User\Entities;
 
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Core\Entity\BaseEntity;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Modules\User\Database\Factories\UserFactory;
 
-/**
- * @property string              $first_name
- * @property string              $last_name
- * @property string              email
- * @property string|null         phone
- * @property bool|null           email_verified_at
- * @property string              password
- * @property string|null         remember_token
- * @property \Carbon\Carbon      created_at
- * @property \Carbon\Carbon      updated_at
- * @property \Carbon\Carbon|null deleted_at
- * @method User create()
- */
-class User extends Model
+class User extends BaseEntity
 {
-    use HasFactory;
-    use HasUuids;
-    use SoftDeletes;
+    use HasApiTokens;
+    use Notifiable;
 
     protected $fillable = [
         'first_name',
@@ -39,8 +25,88 @@ class User extends Model
         'deleted_at',
     ];
 
-    protected static function newFactory()
+    protected $hidden = [
+        'email_verified_at',
+        'password',
+        'remember_token',
+        'updated_at',
+        'deleted_at',
+    ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password'          => 'hashed',
+    ];
+
+    //////////////////////////////////////////////////////////////////////////////
+
+    public function getFirstName(): string
     {
-        return \Modules\User\Database\factories\UserFactory::new();
+        return $this->first_name;
+    }
+
+    public function setFirstName(string $firstName): void
+    {
+        $this->first_name = $firstName;
+    }
+
+    public function getLastName(): string
+    {
+        return $this->last_name;
+    }
+
+    public function setLastName(string $lastName): void
+    {
+        $this->last_name = $lastName;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): void
+    {
+        $this->phone = $phone;
+    }
+
+    public function getEmailVerifiedAt(): \Illuminate\Support\Carbon|null
+    {
+        return $this->email_verified_at;
+    }
+
+    public function setEmailVerifiedAt(\Illuminate\Support\Carbon|null $emailVerifiedAt): void
+    {
+        $this->email_verified_at = $emailVerifiedAt;
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
+    public function getRememberToken(): ?string
+    {
+        return $this->remember_token;
+    }
+
+    public function setRememberToken(?string $rememberToken): void
+    {
+        $this->remember_token = $rememberToken;
     }
 }
