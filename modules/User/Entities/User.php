@@ -2,10 +2,9 @@
 
 namespace Modules\User\Entities;
 
-use Core\Entity\BaseEntity;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Modules\User\Database\Factories\UserFactory;
+use Core\Entity\BaseEntity;
 
 class User extends BaseEntity
 {

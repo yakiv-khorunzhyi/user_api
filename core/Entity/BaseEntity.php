@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * @method static \Core\Entity\BaseEntity create(array $params) create entity
@@ -18,7 +19,12 @@ abstract class BaseEntity extends Model
     use HasUuids;
     use SoftDeletes;
 
-    public function getCreatedAt(): \Illuminate\Support\Carbon
+    public function getId(): string|int
+    {
+        return $this->id;
+    }
+
+    public function getCreatedAt(): Carbon
     {
         return $this->created_at;
     }
@@ -26,7 +32,7 @@ abstract class BaseEntity extends Model
     /**
      * Used annotation because of Laravel base method declaration
      *
-     * @param \Illuminate\Support\Carbon $createdAt
+     * @param Carbon $createdAt
      *
      * @return void
      */
@@ -35,7 +41,7 @@ abstract class BaseEntity extends Model
         $this->created_at = $createdAt;
     }
 
-    public function getUpdatedAt(): \Illuminate\Support\Carbon
+    public function getUpdatedAt(): Carbon
     {
         return $this->updated_at;
     }
@@ -43,7 +49,7 @@ abstract class BaseEntity extends Model
     /**
      * Used annotation because of Laravel base method declaration
      *
-     * @param \Illuminate\Support\Carbon $updatedAt
+     * @param Carbon $updatedAt
      *
      * @return void
      */
@@ -52,7 +58,7 @@ abstract class BaseEntity extends Model
         $this->updated_at = $updatedAt;
     }
 
-    public function getDeletedAt(): ?\Illuminate\Support\Carbon
+    public function getDeletedAt(): Carbon|null
     {
         return $this->deleted_at;
     }
@@ -60,7 +66,7 @@ abstract class BaseEntity extends Model
     /**
      * Used annotation because of Laravel base method declaration
      *
-     * @param \Illuminate\Support\Carbon|null $deletedAt
+     * @param Carbon|null $deletedAt
      *
      * @return void
      */
