@@ -3,10 +3,10 @@
 namespace Modules\User\Providers;
 
 use App\Models\User;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
-use Modules\User\Http\Controllers\ResourceController;
-use Modules\User\RepositoryAbstract;
+use Illuminate\Support\ServiceProvider;
+use Modules\User\Controllers\ResourceController;
+use Modules\User\Repository;
 use Modules\User\Service;
 
 class UserServiceProvider extends ServiceProvider
@@ -120,7 +120,7 @@ class UserServiceProvider extends ServiceProvider
     public function bindServices(): void
     {
         $this->app->bind(ResourceController::class, function () {
-            return new ResourceController(new Service(new RepositoryAbstract(User::class)));
+            return new ResourceController(new Service(new Repository(User::class)));
         });
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Modules\User;
 
-use Core\Service\BaseService;
+use Core\Service\AbstractBaseService;
 use Core\Service\ServiceInterface;
 
-class Service extends BaseService implements ServiceInterface
+class Service extends AbstractBaseService implements ServiceInterface
 {
 }

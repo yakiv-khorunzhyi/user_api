@@ -1,19 +1,20 @@
 <?php
 
-namespace Modules\User\Http\Controllers;
+namespace Modules\User\Controllers;
 
-use Core\Resource\BaseResource;
-use Core\Service\ServiceInterface;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
+use Modules\User\Requests\CreateRequest;
+use Core\Controller\BaseController;
+use Core\Service\ServiceInterface;
 use Modules\User\Entities\User;
+use Core\Resource\BaseResource;
+use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 
 /**
  * @property \Modules\User\Service $service
  */
-class ResourceController extends Controller
+class ResourceController extends BaseController
 {
     public function __construct(protected ServiceInterface $service) {}
 
@@ -22,11 +23,11 @@ class ResourceController extends Controller
         return BaseResource::collection($this->service->getRepository()->all());
     }
 
-    public function store(Request $request): Response
+    public function store(CreateRequest $request): Response
     {
         $this->service->create($request->validated());
 
-        return \response(); // TODO
+        return ;
     }
 
     public function show(User $user): Response
